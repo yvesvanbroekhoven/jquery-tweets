@@ -11,8 +11,16 @@
     google.load("jquery", "1");
   </script>
   <script src="jquery-tweets-min.js"></script>
+  <script>
+    $(function() {
+      $('.js-twitter-feed').tweets('https://api.twitter.com/1/statuses/user_timeline.json?screen_name=ivow');
+      $('.js-twitter-feed').tweets();
+    });
+  </script>
 </head>
 <body>
+
+<div class="js-twitter-feed"></div>
 
 </body>
 </html>
