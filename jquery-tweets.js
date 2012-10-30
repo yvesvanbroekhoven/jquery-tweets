@@ -31,11 +31,9 @@
     var _this = this;
 
     if ( window.JSON && window.Storage && this.cache !== undefined) {
-      console.log( 'it is in the cache yo!' );
       this.output( $.parseJSON(this.cache) );
 
     } else {
-      console.log( 'not in the cache yo! ');
       $.ajax({
         dataType: 'jsonp',
         success: function( response_data ){
@@ -63,7 +61,6 @@
 
   $.fn.tweets = function(url, options ) {
     return this.each(function(idx) {
-      console.log(idx);
       if ( !$.data(this, 'plugin_' + plugin_name) ) {
         $.data(this, 'plugin_' + plugin_name, true);
         new Tweets( this, url, options );
