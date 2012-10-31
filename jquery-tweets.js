@@ -11,7 +11,7 @@
 
 /*global jQuery:false*/
 
-(function($) {
+(function($, window) {
   "use strict";
 
   var plugin_name = 'jquery-tweets',
@@ -59,7 +59,7 @@
           $a          = $('<a />'),
           $span       = $('<span />'),
           $time       = $('<time />'),
-          created_at  = new Date( value.created_at );
+          created_at  = new Date( value.created_at ),
           created_at_formated = created_at.getFullYear() + '-' + (created_at.getMonth() + 1) + '-' + created_at.getDate();
 
       $a
@@ -109,7 +109,7 @@
         hash = ((hash<<5)-hash)+character;
         hash = hash & hash; // Convert to 32bit integer
     }
-    return window.Math.abs(hash);
+    return Math.abs(hash);
   };
 
-}(jQuery));
+}(jQuery, window));
