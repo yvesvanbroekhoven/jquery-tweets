@@ -2,14 +2,14 @@
  * jquery-tweets
  *
  * Created at: 2012-10-30 16:53:39 +0100
- * Updated at: 2012-10-31 11:07:53 +0100
+ * Updated at: 2012-10-31 13:20:11 +0100
  *
  * Author: @ivow
  * Version: 1.0.3
  *
  */
 
-/*global jQuery:false*/
+/*global jQuery:false window*/
 
 (function($, window) {
   "use strict";
@@ -27,7 +27,9 @@
     this.cache   = window.sessionStorage[plugin_name + this.id];
 
     this.init();
-  };
+
+
+  }
 
   Tweets.prototype.init = function() {
     var _this = this;
@@ -59,8 +61,9 @@
           $a          = $('<a />'),
           $span       = $('<span />'),
           $time       = $('<time />'),
-          created_at  = new Date( value.created_at ),
-          created_at_formated = created_at.getFullYear() + '-' + (created_at.getMonth() + 1) + '-' + created_at.getDate();
+          created_at  = new Date( Date.parse(value.created_at.replace(/(\+\S+) (.*)/, '$2 $1')) ),
+          created_at_formated = created_at.getFullYear() + '-' + (created_at.getMonth() + 1) + '-' + created_at.getDate(),
+          created_at_iso      = ISODateString(created_at);
 
       $a
         .attr( 'href', 'https://twitter.com/' + value.user.screen_name + '/status/' + value.id_str )
@@ -71,7 +74,7 @@
         .appendTo( $a );
 
       $time
-        .attr( 'datetime', created_at.toISOString() )
+        .attr( 'datetime', created_at_iso )
         .text( created_at_formated )
         .appendTo( $a );
 
@@ -86,7 +89,7 @@
   };
 
   $.fn.tweets = function(url, options ) {
-    return this.each(function(idx) {
+    return this.each(function() {
       if ( !$.data(this, 'plugin_' + plugin_name) ) {
         $.data(this, 'plugin_' + plugin_name, true);
         new Tweets( this, url, options );
@@ -100,7 +103,7 @@
         i,
         character;
 
-    if (this.length == 0) {
+    if (this.length === 0) {
       return hash;
     }
 
@@ -111,5 +114,15 @@
     }
     return Math.abs(hash);
   };
+
+  function ISODateString(d){
+    function pad(n){return n<10 ? '0'+n : n}
+    return d.getUTCFullYear()+'-'
+         + pad(d.getUTCMonth()+1)+'-'
+         + pad(d.getUTCDate())+'T'
+         + pad(d.getUTCHours())+':'
+         + pad(d.getUTCMinutes())+':'
+         + pad(d.getUTCSeconds())+'Z'
+  }
 
 }(jQuery, window));
