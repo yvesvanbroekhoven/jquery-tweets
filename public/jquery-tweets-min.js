@@ -3,12 +3,12 @@
  jquery-tweets
 
  Created at: 2012-10-30 16:53:39 +0100
- Updated at: 2012-10-31 11:07:53 +0100
+ Updated at: 2012-10-31 13:22:40 +0100
 
  Author: @ivow
  Version: 1.0.3
 
 */
-(function(a,c){function d(b,f,i){this.element=b;this.url=f;this.id=this.url.hashCode();this.options=a.extend({},h,i);this.cache=c.sessionStorage[e+this.id];this.init()}var e="jquery-tweets",h={doneCallback:null};d.prototype.init=function(){var b=this;c.JSON&&c.Storage&&void 0!==this.cache?this.output(a.parseJSON(this.cache)):a.ajax({dataType:"jsonp",success:function(a){c.JSON&&c.Storage&&(c.sessionStorage[e+b.id]=JSON.stringify(a));b.output(a)},url:b.url})};d.prototype.output=function(b){var f=a("<ul />");
-a.each(b,function(b,c){var e=a("<li />"),d=a("<a />"),h=a("<span />"),j=a("<time />"),g=new Date(c.created_at),k=g.getFullYear()+"-"+(g.getMonth()+1)+"-"+g.getDate();d.attr("href","https://twitter.com/"+c.user.screen_name+"/status/"+c.id_str).appendTo(e);h.html(c.text).appendTo(d);j.attr("datetime",g.toISOString()).text(k).appendTo(d);e.appendTo(f)});f.appendTo(a(this.element));a.isFunction(this.options.doneCallback)&&this.options.doneCallback.call(this.element)};a.fn.tweets=function(b,c){return this.each(function(){a.data(this,
-"plugin_"+e)||(a.data(this,"plugin_"+e,!0),new d(this,b,c))})};String.prototype.hashCode=function(){var b=0,a,c;if(0==this.length)return b;for(a=0;a<this.length;a++)c=this.charCodeAt(a),b=(b<<5)-b+c,b&=b;return Math.abs(b)}})(jQuery,window);
+(function(b,c){function e(a,h,j){this.element=a;this.url=h;this.id=this.url.hashCode();this.options=b.extend({},i,j);this.cache=c.sessionStorage[f+this.id];this.init()}var f="jquery-tweets",i={doneCallback:null};e.prototype.init=function(){var a=this;c.JSON&&c.Storage&&void 0!==this.cache?this.output(b.parseJSON(this.cache)):b.ajax({dataType:"jsonp",success:function(b){c.JSON&&c.Storage&&(c.sessionStorage[f+a.id]=JSON.stringify(b));a.output(b)},url:a.url})};e.prototype.output=function(a){var h=b("<ul />");
+b.each(a,function(a,c){var f=b("<li />"),e=b("<a />"),i=b("<span />"),k=b("<time />"),d=new Date(Date.parse(c.created_at.replace(/(\+\S+) (.*)/,"$2 $1"))),l=d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate(),g=function(a){return 10>a?"0"+a:a},d=d.getUTCFullYear()+"-"+g(d.getUTCMonth()+1)+"-"+g(d.getUTCDate())+"T"+g(d.getUTCHours())+":"+g(d.getUTCMinutes())+":"+g(d.getUTCSeconds())+"Z";e.attr("href","https://twitter.com/"+c.user.screen_name+"/status/"+c.id_str).appendTo(f);i.html(c.text).appendTo(e);
+k.attr("datetime",d).text(l).appendTo(e);f.appendTo(h)});h.appendTo(b(this.element));b.isFunction(this.options.doneCallback)&&this.options.doneCallback.call(this.element)};b.fn.tweets=function(a,c){return this.each(function(){b.data(this,"plugin_"+f)||(b.data(this,"plugin_"+f,!0),new e(this,a,c))})};String.prototype.hashCode=function(){var a=0,b,c;if(0===this.length)return a;for(b=0;b<this.length;b++)c=this.charCodeAt(b),a=(a<<5)-a+c,a&=a;return Math.abs(a)}})(jQuery,window);
