@@ -11,17 +11,23 @@
     google.load("jquery", "1");
   </script>
   <script src="jquery-tweets-min.js"></script>
+  <script src="https://raw.github.com/rmm5t/jquery-timeago/master/jquery.timeago.js"></script>
   <script>
     $(function() {
+      // Get 5 tweets from @ivow
       $('.js-twitter-feed-ivow').tweets('https://api.twitter.com/1/statuses/user_timeline.json?screen_name=ivow&count=5&include_rts=1');
-      $('.js-twitter-feed-eliencasier').tweets('https://api.twitter.com/1/statuses/user_timeline.json?screen_name=kattesnor&count=5&include_rts=1');
+
+      // Get 1 tweet from @eliencasier
+      $('.js-twitter-feed-eliencasier').tweets('https://api.twitter.com/1/statuses/user_timeline.json?screen_name=kattesnor&count=1&include_rts=1');
+
+      $('.twitter-feed time').timeago();
     });
   </script>
 </head>
 <body>
 
-<div class="js-twitter-feed-ivow"></div>
-<div class="js-twitter-feed-eliencasier"></div>
+<div class="js-twitter-feed-ivow twitter-feed"></div>
+<div class="js-twitter-feed-eliencasier twitter-feed"></div>
 
 </body>
 </html>

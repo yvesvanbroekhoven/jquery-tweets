@@ -2,7 +2,7 @@
  * jquery-tweets
  *
  * Created at: 2012-10-30 16:53:39 +0100
- * Updated at: 2012-10-30 20:27:12 +0100
+ * Updated at: 2012-10-31 10:30:09 +0100
  *
  * Author: @ivow
  * Version: 1.0.0
@@ -23,7 +23,7 @@
     this.id      = this.url.hashCode();
     this.options = $.extend( {}, defaults, options );
     this.cache   = window.sessionStorage[plugin_name + this.id];
-    console.log(this);
+
     this.init();
   };
 
@@ -51,11 +51,31 @@
 
   Tweets.prototype.output = function( data ) {
     var $ul = $('<ul />');
+
     $.each( data, function(idx, value) {
-      var $li = $('<li />');
-      $li.text( value.text );
+      var $li         = $('<li />'),
+          $a          = $('<a />'),
+          $span       = $('<span />'),
+          $time       = $('<time />'),
+          created_at  = new Date( value.created_at );
+          created_at_formated = created_at.getFullYear() + '-' + (created_at.getMonth() + 1) + '-' + created_at.getDate();
+
+      $a
+        .attr( 'href', 'https://twitter.com/' + value.user.screen_name + '/status/' + value.id_str )
+        .appendTo( $li );
+
+      $span
+        .html( value.text )
+        .appendTo( $a );
+
+      $time
+        .attr( 'datetime', created_at.toISOString() )
+        .text( created_at_formated )
+        .appendTo( $a );
+
       $li.appendTo( $ul );
     });
+
     $ul.appendTo( $(this.element) );
   };
 

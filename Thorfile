@@ -30,6 +30,7 @@ class Jplugin < Thor
 
         run( "git add .; git commit -m '#{label}: #{parts.join('.')}';" )
         run( "git tag -a v#{parts.join('.')} -m '#{label}: #{parts.join('.')}'")
+        run( "git push --tags; git push origin master;" )
 
       else
         say( 'Your git branch is not clean', :red )
@@ -56,6 +57,7 @@ class Jplugin < Thor
 
         run( "git add .; git commit -m '#{label}: #{parts.join('.')}';" )
         run( "git tag -a v#{parts.join('.')} -m '#{label}: #{parts.join('.')}'")
+        run( "git push --tags; git push origin master;" )
 
       else
         say( 'Your git branch is not clean', :red )
@@ -83,6 +85,7 @@ class Jplugin < Thor
 
         run( "git add .; git commit -m '#{label}: #{parts.join('.')}';" )
         run( "git tag -a v#{parts.join('.')} -m '#{label}: #{parts.join('.')}'")
+        run( "git push --tags; git push origin master;" )
 
       else
         say( 'Your git branch is not clean', :red )
