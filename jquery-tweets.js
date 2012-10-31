@@ -2,7 +2,7 @@
  * jquery-tweets
  *
  * Created at: 2012-10-30 16:53:39 +0100
- * Updated at: 2012-10-31 10:38:55 +0100
+ * Updated at: 2012-10-31 11:07:53 +0100
  *
  * Author: @ivow
  * Version: 1.0.3
