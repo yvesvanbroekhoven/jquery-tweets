@@ -18,7 +18,7 @@
       $('.js-twitter-feed-ivow').tweets('https://api.twitter.com/1/statuses/user_timeline.json?screen_name=ivow&count=5&include_rts=1', {
         doneCallback: function(){
           try {
-            //$('.twitter-feed time').timeago();
+            $('.twitter-feed time').timeago();
           } catch(e) {
 
           }
