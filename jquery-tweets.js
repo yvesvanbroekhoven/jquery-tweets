@@ -2,10 +2,10 @@
  * jquery-tweets
  *
  * Created at: 2012-10-30 16:53:39 +0100
- * Updated at: 2012-10-31 13:20:11 +0100
+ * Updated at: 2012-11-09 10:41:59 +0100
  *
  * Author: @ivow
- * Version: 1.0.3
+ * Version: 1.0.5
  *
  */
 
@@ -14,10 +14,14 @@
 (function($, window) {
   "use strict";
 
+  var tmpl_tweet = '<a href="{{tweet_url}}"><span>{{tweet}}</span><time datetime="{{created_at_iso}}" title="{{created_at_formatted}}">{{created_at_formatted}}</time></a>';
+
   var plugin_name = 'jquery-tweets',
       defaults    = {
-        doneCallback: null
-      };
+        doneCallback: null,
+        tmpl_tweet: tmpl_tweet
+      },
+      ISODateString;
 
   function Tweets( element, url, options ) {
     this.element = element;
@@ -54,31 +58,27 @@
   };
 
   Tweets.prototype.output = function( data ) {
-    var $ul = $('<ul />');
+    var _this = this,
+        $ul = $('<ul />');
 
     $.each( data, function(idx, value) {
       var $li         = $('<li />'),
-          $a          = $('<a />'),
-          $span       = $('<span />'),
-          $time       = $('<time />'),
+          template    = _this.options.tmpl_tweet,
           created_at  = new Date( Date.parse(value.created_at.replace(/(\+\S+) (.*)/, '$2 $1')) ),
-          created_at_formated = created_at.getFullYear() + '-' + (created_at.getMonth() + 1) + '-' + created_at.getDate(),
+          created_at_formatted = created_at.getFullYear() + '-' + (created_at.getMonth() + 1) + '-' + created_at.getDate(),
           created_at_iso      = ISODateString(created_at);
 
-      $a
-        .attr( 'href', 'https://twitter.com/' + value.user.screen_name + '/status/' + value.id_str )
-        .appendTo( $li );
+      template = template
+        .replace(/\{\{tweet_url\}\}/g, 'https://twitter.com/' + value.user.screen_name + '/status/' + value.id_str)
+        .replace(/\{\{tweet\}\}/g, value.text)
+        .replace(/\{\{created_at\}\}/g, value.created_at)
+        .replace(/\{\{created_at_iso\}\}/g, created_at_iso)
+        .replace(/\{\{created_at_formatted\}\}/g, created_at_formatted)
+        .replace(/\{\{profile_image_url\}\}/g, value.user.profile_image_url);
 
-      $span
-        .html( value.text )
-        .appendTo( $a );
-
-      $time
-        .attr( 'datetime', created_at_iso )
-        .text( created_at_formated )
-        .appendTo( $a );
-
-      $li.appendTo( $ul );
+      $li
+        .append( $(template) )
+        .appendTo( $ul );
     });
 
     $ul.appendTo( $(this.element) );
@@ -115,14 +115,9 @@
     return Math.abs(hash);
   };
 
-  function ISODateString(d){
-    function pad(n){return n<10 ? '0'+n : n}
-    return d.getUTCFullYear()+'-'
-         + pad(d.getUTCMonth()+1)+'-'
-         + pad(d.getUTCDate())+'T'
-         + pad(d.getUTCHours())+':'
-         + pad(d.getUTCMinutes())+':'
-         + pad(d.getUTCSeconds())+'Z'
-  }
+  ISODateString = function(d){
+    function pad(n){ return n<10 ? '0'+n : n; }
+    return d.getUTCFullYear()+'-'+ pad(d.getUTCMonth()+1)+'-'+ pad(d.getUTCDate())+'T'+ pad(d.getUTCHours())+':'+ pad(d.getUTCMinutes())+':'+ pad(d.getUTCSeconds())+'Z';
+  };
 
 }(jQuery, window));
