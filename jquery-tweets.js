@@ -1,8 +1,10 @@
+/*global require, exports, console */
+
 /** @preserve
  * jquery-tweets
  *
  * Created at: 2012-10-30 16:53:39 +0100
- * Updated at: 2012-11-09 10:47:34 +0100
+ * Updated at: 2012-11-10 14:06:39 +0100
  *
  * Author: @ivow
  * Version: 1.0.5
@@ -74,6 +76,8 @@
         .replace(/\{\{created_at\}\}/g, value.created_at)
         .replace(/\{\{created_at_iso\}\}/g, created_at_iso)
         .replace(/\{\{created_at_formatted\}\}/g, created_at_formatted)
+        .replace(/\{\{profile_image_url\}\}/g, value.user.profile_image_url)
+        .replace(/\{\{screen_name\}\}/g, value.user.screen_name)
         .replace(/\{\{profile_image_url\}\}/g, value.user.profile_image_url);
 
       $li
