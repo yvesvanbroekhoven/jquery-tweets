@@ -3,10 +3,10 @@
  jquery-tweets
 
  Created at: 2012-10-30 16:53:39 +0100
- Updated at: 2012-11-12 19:58:24 +0100
+ Updated at: 2012-11-12 20:01:54 +0100
 
  Author: @ivow
- Version: 1.0.6
+ Version: 1.0.7
 
 */
 (function(c,e){function d(a,b,i){this.element=a;this.url=b;this.id=this.url.hashCode();this.options=c.extend({},j,i);this.cache=e.sessionStorage[g+this.id];this.init()}var g="jquery-tweets",j={doneCallback:null,tmpl_tweet:'<a href="{{tweet_url}}"><span>{{tweet}}</span><time datetime="{{created_at_iso}}" title="{{created_at_formatted}}">{{created_at_formatted}}</time></a>'};d.prototype.init=function(){var a=this;e.JSON&&e.Storage&&void 0!==this.cache?this.output(c.parseJSON(this.cache)):c.ajax({dataType:"jsonp",
