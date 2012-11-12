@@ -4,7 +4,7 @@
  * jquery-tweets
  *
  * Created at: 2012-10-30 16:53:39 +0100
- * Updated at: 2012-11-10 14:10:32 +0100
+ * Updated at: 2012-11-12 19:58:24 +0100
  *
  * Author: @ivow
  * Version: 1.0.6
@@ -66,9 +66,9 @@
     $.each( data, function(idx, value) {
       var $li         = $('<li />'),
           template    = _this.options.tmpl_tweet,
-          created_at  = new Date( Date.parse(value.created_at.replace(/(\+\S+) (.*)/, '$2 $1')) ),
-          created_at_formatted = created_at.getFullYear() + '-' + (created_at.getMonth() + 1) + '-' + created_at.getDate(),
-          created_at_iso      = ISODateString(created_at);
+          created_at  = _this.createdAt( value.created_at ),
+          created_at_formatted  = created_at.getFullYear() + '-' + (created_at.getMonth() + 1) + '-' + created_at.getDate(),
+          created_at_iso        = _this.createdAtISO( created_at );
 
       template = template
         .replace(/\{\{tweet_url\}\}/g, 'https://twitter.com/' + value.user.screen_name + '/status/' + value.id_str)
@@ -91,6 +91,18 @@
       this.options.doneCallback.call( this.element );
     }
   };
+
+  Tweets.prototype.createdAt = function( time_value ) {
+    var values = time_value.split(" ");
+    return new Date( values[1] + " " + values[2] + ", " + values[5] + " " + values[3] );
+  };
+
+  Tweets.prototype.createdAtISO = function( date ) {
+    function pad(n) {
+      return n < 10 ? '0' + n : n;
+    }
+    return date.getUTCFullYear() + '-' + pad( date.getUTCMonth() + 1 ) + '-' + pad( date.getUTCDate() )+ 'T' + pad( date.getUTCHours() ) + ':' + pad( date.getUTCMinutes() ) + ':' + pad( date.getUTCSeconds() ) + 'Z';
+  }
 
   $.fn.tweets = function(url, options ) {
     return this.each(function() {
@@ -117,11 +129,6 @@
         hash = hash & hash; // Convert to 32bit integer
     }
     return Math.abs(hash);
-  };
-
-  ISODateString = function(d){
-    function pad(n){ return n<10 ? '0'+n : n; }
-    return d.getUTCFullYear()+'-'+ pad(d.getUTCMonth()+1)+'-'+ pad(d.getUTCDate())+'T'+ pad(d.getUTCHours())+':'+ pad(d.getUTCMinutes())+':'+ pad(d.getUTCSeconds())+'Z';
   };
 
 }(jQuery, window));
