@@ -22,7 +22,6 @@ The plugin will build a list of tweets from that JSON and appends it to your sel
 var url = 'https://api.twitter.com/1/statuses/user_timeline.json?screen_name=ivow&count=5&include_rts=1';
 
 $('.selector').tweets( url );
-
 ```
 
 ## Options
@@ -43,7 +42,7 @@ Currently I've added the variables I came across using in projects. If you want 
 
 The default template:
 
-```javascript
+```html
 <a href="{{tweet_url}}">
   <span>{{tweet}}</span>
   <time datetime="{{created_at_iso}}" title="{{created_at_formatted}}">{{created_at_formatted}}</time>
@@ -79,5 +78,4 @@ $('.selector').tweets( url, {
     $('.twitter-feed time').timeago();
   }
 });
-
 ```
