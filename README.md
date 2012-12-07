@@ -18,7 +18,7 @@ The plugin will build a list of tweets from that JSON and appends it to your sel
 
 ### Example: show last 5 tweets from account @ivow
 
-```
+```javascript
 var url = 'https://api.twitter.com/1/statuses/user_timeline.json?screen_name=ivow&count=5&include_rts=1';
 
 $('.selector').tweets( url );
@@ -43,7 +43,7 @@ Currently I've added the variables I came across using in projects. If you want 
 
 The default template:
 
-```
+```javascript
 <a href="{{tweet_url}}">
   <span>{{tweet}}</span>
   <time datetime="{{created_at_iso}}" title="{{created_at_formatted}}">{{created_at_formatted}}</time>
@@ -52,7 +52,7 @@ The default template:
 
 ### Example: add a custom tweet template
 
-```
+```javascript
 var url = 'https://api.twitter.com/1/statuses/user_timeline.json?screen_name=ivow&count=5&include_rts=1',
     tmpl_tweet = '<a href="{{tweet_url}}" target="_blank"><img src="{{profile_image_url}}" class="profile-image" alt="" /><span class="screen-name">{{screen_name}}</span><span class="body">{{tweet}}</span><time datetime="{{created_at_iso}}" title="{{created_at_formatted}}">{{created_at_formatted}}</time></a>';
 
@@ -71,7 +71,7 @@ The timeago plugin transforms the twitter timestamps into a more human readable 
 
 Don't forget to include the timeago plugin in your HTML.
 
-```
+```javascript
 var url = 'https://api.twitter.com/1/statuses/user_timeline.json?screen_name=ivow&count=5&include_rts=1';
 
 $('.selector').tweets( url, {
