@@ -21,6 +21,13 @@ class Jplugin < Thor
         version = nil
         parts   = nil
 
+        gsub_file( 'tweets.jquery.json', /"version"[:].+$/) do |match|
+          label, version = *match.split(':', 2)
+          parts = version.strip.split('.')
+          parts[2] = parts[2].to_i + 1
+          "#{label}: #{parts.join('.')}\","
+        end
+
         gsub_file( 'jquery-tweets.js', /Version[:].+$/) do |match|
           label, version = *match.split(':', 2)
           parts = version.strip.split('.')
@@ -28,7 +35,7 @@ class Jplugin < Thor
           "#{label}: #{parts.join('.')}"
         end
 
-        run( "thor jplugin:compile" )
+        run( "thor jplugin:compile")
         run( "git add .; git commit -m '#{label}: #{parts.join('.')}';" )
         run( "git tag -a v#{parts.join('.')} -m '#{label}: #{parts.join('.')}'")
         run( "git push --tags; git push origin master;" )
@@ -48,6 +55,14 @@ class Jplugin < Thor
         version = nil
         parts   = nil
 
+        gsub_file( 'tweets.jquery.json', /"version"[:].+$/) do |match|
+          label, version = *match.split(':', 2)
+          parts = version.strip.split('.')
+          parts[1] = parts[1].to_i + 1
+          parts[2] = 0
+          "#{label}: #{parts.join('.')}\","
+        end
+
         gsub_file( 'jquery-tweets.js', /Version[:].+$/) do |match|
           label, version = *match.split(':', 2)
           parts = version.strip.split('.')
@@ -56,6 +71,7 @@ class Jplugin < Thor
           "#{label}: #{parts.join('.')}"
         end
 
+        run( "thor jplugin:compile")
         run( "git add .; git commit -m '#{label}: #{parts.join('.')}';" )
         run( "git tag -a v#{parts.join('.')} -m '#{label}: #{parts.join('.')}'")
         run( "git push --tags; git push origin master;" )
@@ -75,6 +91,15 @@ class Jplugin < Thor
         version = nil
         parts   = nil
 
+        gsub_file( 'tweets.jquery.json', /"version"[:].+$/) do |match|
+          label, version = *match.split(':', 2)
+          parts = version.strip.split('.')
+          parts[0] = parts[0].gsub(/\"/,'').to_i + 1
+          parts[1] = 0
+          parts[2] = 0
+          "#{label}: \"#{parts.join('.')}\","
+        end
+
         gsub_file( 'jquery-tweets.js', /Version[:].+$/) do |match|
           label, version = *match.split(':', 2)
           parts = version.strip.split('.')
@@ -84,6 +109,7 @@ class Jplugin < Thor
           "#{label}: #{parts.join('.')}"
         end
 
+        run( "thor jplugin:compile")
         run( "git add .; git commit -m '#{label}: #{parts.join('.')}';" )
         run( "git tag -a v#{parts.join('.')} -m '#{label}: #{parts.join('.')}'")
         run( "git push --tags; git push origin master;" )

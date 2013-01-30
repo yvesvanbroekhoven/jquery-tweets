@@ -3,11 +3,12 @@
  jquery-tweets
 
  Created at: 2012-10-30 16:53:39 +0100
- Updated at: 2012-11-12 20:01:54 +0100
+ Updated at: 2013-01-30 07:11:48 +0100
 
  Author: @ivow
  Version: 1.0.7
 
+ https://github.com/yvesvanbroekhoven/jquery-tweets/
 */
 (function(c,e){function d(a,b,i){this.element=a;this.url=b;this.id=this.url.hashCode();this.options=c.extend({},j,i);this.cache=e.sessionStorage[g+this.id];this.init()}var g="jquery-tweets",j={doneCallback:null,tmpl_tweet:'<a href="{{tweet_url}}"><span>{{tweet}}</span><time datetime="{{created_at_iso}}" title="{{created_at_formatted}}">{{created_at_formatted}}</time></a>'};d.prototype.init=function(){var a=this;e.JSON&&e.Storage&&void 0!==this.cache?this.output(c.parseJSON(this.cache)):c.ajax({dataType:"jsonp",
 success:function(b){e.JSON&&e.Storage&&(e.sessionStorage[g+a.id]=JSON.stringify(b));a.output(b)},url:a.url})};d.prototype.output=function(a){var b=this,i=c("<ul />");c.each(a,function(a,f){var e=c("<li />"),d=b.options.tmpl_tweet,h=b.createdAt(f.created_at),g=h.getFullYear()+"-"+(h.getMonth()+1)+"-"+h.getDate(),h=b.createdAtISO(h),d=d.replace(/\{\{tweet_url\}\}/g,"https://twitter.com/"+f.user.screen_name+"/status/"+f.id_str).replace(/\{\{tweet\}\}/g,f.text).replace(/\{\{created_at\}\}/g,f.created_at).replace(/\{\{created_at_iso\}\}/g,
