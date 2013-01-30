@@ -4,10 +4,10 @@
  * jquery-tweets
  *
  * Created at: 2012-10-30 16:53:39 +0100
- * Updated at: 2013-01-30 07:13:51 +0100
+ * Updated at: 2013-01-30 07:17:12 +0100
  *
  * Author: @ivow
- * Version: 1.0.8
+ * Version: 1.0.9
  *
  * https://github.com/yvesvanbroekhoven/jquery-tweets/
  */
